@@ -3,9 +3,11 @@ from urllib.parse import urlencode
 import webbrowser
 import requests
 import os
+from api_requests.auth import get_auth_token
+
 
 # URLS
-AUTH_URL = 'https://accounts.spotify.com/authorize'
+AUTH_URL = 'https://accounts.spotify.com/authorize?'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
 BASE_URL = 'https://api.spotify.com/v1/'
 
@@ -13,21 +15,36 @@ client_id = os.environ.get('CLIENT_ID')
 client_secret = os.environ.get('CLIENT_SECRET')
 
 def get_user_authorization_code():
-
     
+    auth_token = get_auth_token()
+    print("Auth Token is {}".format(auth_token))
 
     # Make a request to the /authorize endpoint to get an authorization code
-    auth_code = requests.get(AUTH_URL, {
-        'client_id': client_id,
-        'response_type': 'code',
-        'redirect_uri': 'http://localhost:8000/callback/',
-        'scope': 'playlist-modify-private',
-    })
-    print("Auth code is {}".format(auth_code.text))
+    # auth_headers = requests.get(AUTH_URL, {
+    #     'client_id': client_id,
+    #     'response_type': 'code',
+    #     'redirect_uri': 'http://localhost:8000/callback',
+    #     'scope': 'playlist-modify-private',
+    # })
 
-    r = webbrowser.open("https://accounts.spotify.com/authorize?" + urlencode(auth_headers))
+    auth_headers = {
+        "client_id": client_id,
+        "response_type": "code",
+        "redirect_uri": "http://localhost:3000/callback/",
+        "scope": "user-library-read"
+    }
 
-    # # # # auth_header = base64.urlsafe_b64encode((client_id + ':' + client_secret).encode('ascii'))
+    print(auth_headers)
+    # urlstr = urlencode(auth_headers.text)
+
+    # print(urlstr)
+
+    # r = webbrowser.open("https://accounts.spotify.com/authorize?" + auth_headers.text)
+    # r = webbrowser.open("https://accounts.spotify.com/authorize?" + urlencode(auth_headers))
+    webbrowser.open("https://accounts.spotify.com/authorize?" + urlencode(auth_headers))
+    # print(auth_headers.text)
+
+    
     # auth_header = base64.urlsafe_b64encode((client_id + ':' + client_secret).encode())
 
 
@@ -54,3 +71,6 @@ def get_user_authorization_code():
     # # # # save the access token
     # # # access_token = access_token_response_data['access_token']
     # # # print(access_token)
+
+
+# https://www.getpostman.com/oauth2/callback/

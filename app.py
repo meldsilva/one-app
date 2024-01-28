@@ -5,9 +5,9 @@ from api_requests import authorize as authr
 
 def main():
     # print("*** Running app.py ***")
-    # g.get_playlists()
-    authr.get_user_authorization_code()
-
+    # Use get_user_authorization_code to obtain auth code in browser window
+    # authr.get_user_authorization_code()
+    g.get_playlists()
 
 if __name__ == "__main__":
     main()

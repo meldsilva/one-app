@@ -20,14 +20,11 @@ def get_auth_token():
 
     for key, value in response_dict.items():
         if key == "access_token":
-            t = value
             # print(f"{key}: {value}")
+            return value
             # print(value)
-
-    return t
+            
 
 
 def is_token_valid(token):
     pass
-
-

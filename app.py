@@ -8,8 +8,6 @@ def main():
     # g.get_playlists()
     authr.get_user_authorization_code()
 
-    
-    
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,11 @@
+env/
+.env
+
+bin
+include
+lib
+
+filename.json
+pyvenv.cfg
+
+.DS_Store
